@@ -14,6 +14,7 @@
 // string encodeHTML()   encode with html
 // string decodeHTML()   decode from html
 
+
 // @brief  strip left space
 // @return {string} the strip string
 String.prototype.lstrip = function () {
