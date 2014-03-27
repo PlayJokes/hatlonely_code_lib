@@ -6,11 +6,11 @@
 #ifndef _GRAPH_H_
 #define _GRAPH_H_
 
-#include <vector>
 #include <set>
 #include <string>
 #include <map>
 #include <iterator>
+#include <iostream>
 
 
 namespace hl {
@@ -21,13 +21,18 @@ namespace hl {
 
     class Vertex {
         public:
+            Vertex(const std::string &desc);
             inline int in_degree();
             inline int out_degree();
             inline Edge *to_vertex(Vertex *v);
             inline Edge *from_vertex(Vertex *v);
+            inline const std::string &get_desc();
+            std::string toString();
         private:
-            std::vector<Edge *> _in_edges;
-            std::vector<Edge *> _out_edges;
+            std::set<Edge *> _in_edges;
+            std::set<Edge *> _out_edges;
+            std::string _desc;
+            bool _is_marked;
 
             friend class Graph;
             friend class Edge;
@@ -35,10 +40,13 @@ namespace hl {
 
     class Edge {
         public:
-            Edge(Vertex *start_vertex, Vertex *to_vertex, uint32_t weight);
-            /* private: */
-            Vertex *_start_vertex;
-            Vertex *_end_vertex;
+            Edge(Vertex *from_vertex, Vertex *to_vertex, uint32_t weight);
+            inline const Vertex *get_from_vertex();
+            inline const Vertex *get_to_vertex();
+            std::string toString();
+        private:
+            Vertex *_from_vertex;
+            Vertex *_to_vertex;
             uint32_t _weight;
 
             friend class Graph;
@@ -48,15 +56,22 @@ namespace hl {
     class Graph {
         public:
             ~Graph();
-            int addVertex(const std::string &key);
+            void add_vertex(const std::string &key);
             template <typename Iterator> void addVertexs(Iterator begin, Iterator end) {
                 for (Iterator it = begin; it != end; ++it) {
-                    addVertex(*it);
+                    add_vertex(*it);
                 }
             }
-            int addEdge(const std::string &from, const std::string &to, uint32_t weight);
-            int for_each_vertex(void (*callback)(const string &, Vertex *));
+            void add_edge(const std::string &from, const std::string &to, uint32_t weight);
+            void del_vertex(const std::string &from);
+            void del_edge(const std::string &from, const std::string &to);
+            void for_each_vertex(void (* callback)(const std::string &, Vertex *));
+            void for_each_edge(void (* callback)(Edge *));
+            std::string toString();
         private:
+            Edge *_find_edge(const std::string &from, const std::string &to);
+            void _clear_mark();
+
             std::map<std::string, Vertex *> _vertexs;
             std::set<Edge *> _edges;
     };
