@@ -134,9 +134,9 @@ namespace hl {
        delete edge;
     }
 
-    void Graph::for_each_vertex(void (* callback)(const std::string &desc, Vertex *vertex)) {
+    void Graph::for_each_vertex(void (* callback)(Vertex *vertex)) {
         for (map<string, Vertex *>::iterator it = _vertexs.begin(); it != _vertexs.end(); ++it) {
-            callback(it->first, it->second);
+            callback(it->second);
         }
     }
 
@@ -144,6 +144,19 @@ namespace hl {
         for (set<Edge *>::iterator it = _edges.begin(); it != _edges.end(); ++it) {
             callback(*it);
         }
+    }
+
+    void Graph::for_each_vertex_dfs(void (* callback)(Vertex *vertex)) {
+        map<string, Vertex *>::iterator vertex_it = _vertexs.begin();
+        for (; vertex_it != _vertexs.end(); ++vertex_it) {
+            if (!vertex_it->second->_is_marked) {
+                // TODO
+            }
+        }
+    }
+
+    void Graph::for_each_vertex_bfs(void (* callback)(Vertex *vertex)) {
+        // TODO
     }
 
     string Graph::toString() {

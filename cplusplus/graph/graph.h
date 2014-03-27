@@ -57,17 +57,19 @@ namespace hl {
         public:
             ~Graph();
             void add_vertex(const std::string &key);
+            void add_edge(const std::string &from, const std::string &to, uint32_t weight);
+            void del_vertex(const std::string &from);
+            void del_edge(const std::string &from, const std::string &to);
+            void for_each_vertex(void (* callback)(Vertex *));
+            void for_each_edge(void (* callback)(Edge *));
+            void for_each_vertex_dfs(void (* callback)(Vertex *));
+            void for_each_vertex_bfs(void (* callback)(Vertex *));
+            std::string toString();
             template <typename Iterator> void addVertexs(Iterator begin, Iterator end) {
                 for (Iterator it = begin; it != end; ++it) {
                     add_vertex(*it);
                 }
             }
-            void add_edge(const std::string &from, const std::string &to, uint32_t weight);
-            void del_vertex(const std::string &from);
-            void del_edge(const std::string &from, const std::string &to);
-            void for_each_vertex(void (* callback)(const std::string &, Vertex *));
-            void for_each_edge(void (* callback)(Edge *));
-            std::string toString();
         private:
             Edge *_find_edge(const std::string &from, const std::string &to);
             void _clear_mark();

@@ -9,7 +9,7 @@
 using namespace std;
 using namespace hl;
 
-void travel_vertex(const string &name, Vertex *vertex) {
+void travel_vertex(Vertex *vertex) {
     cout << vertex->toString() << endl;
 }
 
