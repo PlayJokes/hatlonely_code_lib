@@ -1,7 +1,7 @@
-// @file   hlstring.js
-// @brief  useful function for javascript string
-// @author hatlonely(hatlonely@gmail.com)
-// @date   2014-3-22
+// @file  hlstring.js
+// @desc  useful function for javascript string
+// @auth  hatlonely(hatlonely@gmail.com)
+// @date  2014-3-22
 
 // string lstrip()       strip left space
 // string rstrip()       strip right space
@@ -86,14 +86,14 @@ String.prototype.center = function (width, fillChar) {
 // @brief  test prefix
 // @param  {string} prefix
 // @return {boolean} 
-String.prototype.startWith = function (prefix) {
+String.prototype.startsWith = function (prefix) {
     return this.substr(0, prefix.length) == prefix;
 }
 
 // @brief  test suffix
 // @param  {stirng} suffix
 // @return {boolean}
-String.prototype.endWith = function (suffix) {
+String.prototype.endsWith = function (suffix) {
     return this.substr(this.length - suffix.length, suffix.length) == suffix;
 }
 
