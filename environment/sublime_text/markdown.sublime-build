@@ -1,0 +1,29 @@
+// @file  markdown.sublime-build
+// @desc  sublime build system for markdown
+//          dependency md2html https://github.com/hatlonely/notebook
+// @auth  hatlonely(hatlonely@gmail.com)
+// @date  2014-3-30
+
+{
+    "cmd": ["node", "/Users/hatlonely/Hatlonely/git_workspace/notebook/md2html.js", "$file",
+                // html输出路径
+                "-html_dir /Users/hatlonely/Hatlonely/node_workspace/notebook/",
+                // html图片路径
+                "-image_dir /Users/hatlonely/Hatlonely/git_workspace/notebook/image/",
+                // 基本样式
+                "-base_style /Users/hatlonely/Hatlonely/git_workspace/notebook/hatlonely-note.css",
+                // 代码样式
+                "-code_style /Users/hatlonely/Hatlonely/git_workspace/highlight.js/src/styles/xcode.css",
+                // 最后的个性签名
+                "-foot_image /Users/hatlonely/Hatlonely/git_workspace/notebook/drawhl.js",
+                "-evernote"     // evernote中的bug，代码前面加一个空格
+    ],
+    // 当编译环境为Automatic时，可以自动识别，但是貌似没用……
+    "selector": "source.md",
+    "path": "/usr/local/bin",
+
+    "env": {
+        // marked和highlight.js模块路径
+        "NODE_PATH": "/Users/hatlonely/Hatlonely/node_workspace/node_modules"
+    }
+}
