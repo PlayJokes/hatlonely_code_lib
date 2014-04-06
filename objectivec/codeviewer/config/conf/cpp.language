@@ -1,0 +1,6 @@
+{
+    "keyword": "^(void|char|short|int|long|float|double|auto|const|volatile|register|signed|unsigned|typedef|sizeof|enum|union|class|struct|typename|static|extern|inline|for|while|do|if|else|break|continue|goto|switch|case|return)$",
+    "comment": "(/*(.*?)*/)|(//$)",
+    "string": "\"(.*?)\"",
+    "fixme": "// TODO"
+}
