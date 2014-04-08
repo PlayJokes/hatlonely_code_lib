@@ -3,6 +3,7 @@
 // @auth  hatlonely (hatlonely@gmail.com)
 // @date  2014-3-26
 
+#include <gtest/gtest.h>
 #include <iostream>
 #include "graph.h"
 
@@ -32,4 +33,5 @@ int main() {
     /* g.for_each_vertex(travel_vertex); */
     /* g.for_each_edge(travel_edge); */
     cout << g.toString();
+    EXPECT_EQ(4, 2);
 }

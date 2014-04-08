@@ -1,0 +1,6 @@
+PROJECT(GRAPH)
+SET(SRC_LIST graph_test.cpp graph.cpp graph.h)
+INCLUDE_DIRECTORIES("/Users/hatlonely/Hatlonely/library/gtest-1.7.0/include/")
+LINK_DIRECTORIES("/Users/hatlonely/Hatlonely/library/gtest-1.7.0/")
+ADD_EXECUTABLE(graph ${SRC_LIST})
+TARGET_LINK_LIBRARIES(graph libgtest.a)
