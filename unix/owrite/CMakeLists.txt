@@ -1,0 +1,3 @@
+PROJECT(OWRITE)
+SET(SRC_LIST owrite.cpp)
+ADD_EXECUTABLE(owrite ${SRC_LIST})
