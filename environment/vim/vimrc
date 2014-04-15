@@ -1,0 +1,187 @@
+"""""""""""""""""""""""""""""""""""""""""
+"      Linux版本vim
+"   最后一次修改： 2014/3/31
+"""""""""""""""""""""""""""""""""""""""""
+
+set nocompatible
+filetype on
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       基本设置
+"""""""""""""""""""""""""""""""""""""""""
+set number               " 显示行号
+set nobackup             " 不备份
+colorscheme delek        "配色方案
+set tabstop=4            "TAB 设置
+set softtabstop=4
+set shiftwidth=4
+set foldmethod=marker    "折叠设置
+"set foldmethod=syntax
+"set foldmethod=indent
+set foldlevel=100
+set foldclose=all        "关闭所有折叠
+set autoindent           "缩进设置
+set smartindent
+set cindent
+set fileformats=unix    "设置文件格式
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       编码和字体设置
+"""""""""""""""""""""""""""""""""""""""""
+set termencoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,gbk
+
+set guifont=Monospace\ Bold\ 10
+"set guifont=Consolas\ Regular\ 12
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       常用映射
+"""""""""""""""""""""""""""""""""""""""""
+let mapleader=","
+
+"标签
+nnoremap L :tabnext<cr>
+nnoremap H :tabprevious<cr>
+nnoremap tn :tabnew
+nnoremap ts :tab split<cr>
+"窗口分隔
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+"注释
+nnoremap <leader>/ I/*<space><esc>A<space>*/<esc>j
+nnoremap <leader>; ^xxx$xxxj
+inoremap <leader>/ /*<space><space>*/<left><left><left>
+"替换
+nnoremap <leader>r :%s/\<\>//gc<left><left><left><left><left><left>
+nnoremap <c-f> /\<\><left><left>
+"折叠
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<cr>
+nmap <leader>cs O#if 0 /*  comment by hl at <c-r>=strftime("%y/%m/%d %H:%M")<cr>  {{{  */<esc>
+nmap <leader>ce o#endif /*  comment by hl at <c-r>=strftime("%y/%m/%d %H:%M")<cr>  }}}  */<esc>
+"插入模式下方向键
+imap <a-j> <down>
+imap <a-k> <up>
+imap <a-h> <right>
+imap <a-l> <left>
+"make
+nnoremap cp :cp<cr>
+nnoremap cn :cn<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       ctags 插件
+"""""""""""""""""""""""""""""""""""""""""
+set tags=tags;
+set autochdir
+"nmap <c-[> <c-t>
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       taglist 插件
+"""""""""""""""""""""""""""""""""""""""""
+"let Tlist_Ctags_Cmd = 'ctags.exe'
+let Tlist_Show_One_File = 1            " 同时显示多个文件函数列表
+let Tlist_Exit_OnlyWindow = 1      "当taglist 是最后一个窗口时，自动退出 vim
+let Tlist_Use_Right_Window = 0         "让窗口显示在左边
+let Tlist_Process_File_Always = 0      "不要一直处理tags
+let Tlist_Auto_Close = 0               " 非当前文件，函数列表折叠隐藏
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       DoxygenToolkit 插件
+"""""""""""""""""""""""""""""""""""""""""
+let g:DoxygenToolkit_authorName = "hl - ssdlut"
+let g:DoxygenToolkit_briefTag_funcName = "no"
+let g:DoxygenToolkit_emailString = "596150637@qq.com"
+let g:DoxygenToolkit_versionString = "1.0"
+
+"let g:DoxygenToolkit_briefTag_pre = "@brief "
+"let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
+"let g:DoxygenToolkit_paramTag_pre = "@param "
+"let g:DoxygenToolkit_returnTag = "@return "
+"let g:DoxygenToolkit_throwTag_pre = "@throw "
+"let g:DoxygenToolkit_fileTag = "@file "
+"let g:DoxygenToolkit_authorTag = "@author "
+"let g:DoxygenToolkit_emailTag = "@e-mail "
+"let g:DoxygenToolkit_dateTag = "@date "
+"let g:DoxygenToolkit_versionTag = "@version "
+"let g:DoxygenToolkit_blockTag = "@name "
+"let g:DoxygenToolkit_classTag = "@class "
+"let g:DoxygenToolkit_commentType = "C"
+
+nnoremap <leader>da :DoxAuthor<cr>
+nnoremap <leader>df :Dox<cr>
+nnoremap <leader>db :DoxBlock<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       omnicppcomplete 插件
+"
+"       <c-x> 进入补全模式
+"       <c-d> 宏定义
+"       <c-f> 文件名
+"       <c-k> 字典
+"       <c-i> 当前文件以及由#include包含进来的文件
+"       <c-l> 整个行
+"       <c-]> 标记(tags)
+"       <c-p> 向前查找, 与没有<c-x>命令时相同
+"       <c-n> 向后查找, 与没有<c-x>命令时相同
+"       <c-o> 万能补全
+"       <c-f> 文件名补全
+"       <c-v> VIM命令补全
+"       <c-u> 用户定义补全
+"""""""""""""""""""""""""""""""""""""""""
+imap <leader>s <c-x><c-n>
+imap <leader>d <c-x><c-p>
+imap <leader>f <c-x><c-o>
+
+filetype plugin on
+set completeopt=menu,menuone
+let g:OmniCpp_SelectFirstItem = 0      "是否自动选择第一个匹配项
+let g:OmniCpp_ShowAccess = 1           " 显示访问控制信息
+let g:OmniCpp_GlobalScopeSearch = 1    "全局查找控制。0:禁止； 1:允许( 缺省)
+let g:OmniCpp_NamespaceSearch = 1      " 0 ,  1 or 2
+let g:OmniCpp_DisplayMode = 1
+let g:OmniCpp_ShowScopeInAbbr = 0
+let g:OmniCpp_ShowPrototypeInAbbr = 1
+let g:OmniCpp_MayCompleteDot = 1
+let g:OmniCpp_MayCompleteArrow = 1
+let g:OmniCpp_MayCompleteScope = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       功能键映射
+"""""""""""""""""""""""""""""""""""""""""
+"nmap <F2> :tabnew %:h<cr>
+"在新标签中打开当前目录
+nmap <F2> :Texplore<cr>
+"生成 tags文件
+nmap <F3> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+"nmap <F3> :!ctags -R --fields=+lS .<cr>
+"打开 taglist，不支持中文路径
+nmap <F4> :TlistToggle<cr>
+"make需要自己编写 Makefile
+nmap <F6> :!make<cr>
+nmap <F7> :!make run<cr>
+nmap <F8> :!make clean<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""
+"       对齐
+"""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>ch :call SetColorColumn()<cr>
+function! SetColorColumn()
+    let col_num = virtcol(".")
+    let cc_list = split(&cc, ',')
+    if count(cc_list, string(col_num)) <= 0
+        execute "set cc+=".col_num
+    else
+        execute "set cc-=".col_num
+    endif
+endfunction
