@@ -12,7 +12,8 @@ filetype on
 """""""""""""""""""""""""""""""""""""""""
 set number               " 显示行号
 set nobackup             " 不备份
-colorscheme delek        "配色方案
+syntax on
+colorscheme desert        "配色方案
 set tabstop=4            "TAB 设置
 set softtabstop=4
 set shiftwidth=4
@@ -25,6 +26,7 @@ set autoindent           "缩进设置
 set smartindent
 set cindent
 set fileformats=unix    "设置文件格式
+set backspace=indent,eol,start
 
 
 """""""""""""""""""""""""""""""""""""""""
