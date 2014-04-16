@@ -3,7 +3,7 @@
 // @auth hatlonely (hatlonely@gmail.com)
 // @date 2014-4-16
 
-
+#include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
@@ -199,6 +199,17 @@ void show_help() {
     std::cout << "\t@quit/@exit   退出" << std::endl;
 }
 
+void show_info_me() {
+    std::cout << Environment::getInstance().get_font_style_default()
+        << "[" << Environment::getInstance().get_user() << " "
+        << Environment::getInstance().get_tty() << "] "
+        << Environment::getInstance().get_font_style_highlight();
+}
+
+void quit() {
+    std::cout << Environment::getInstance().get_font_style_default();
+}
+
 int main(int argc, char *argv[]) {
     show_help();
     
@@ -208,15 +219,16 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < user_num; i++) {
         UserTty user_tty = UserTty(argv[i * 2 + 1], argv[i * 2 + 2]);
         if (user_tty.get_fd() == -1) {
-            std::cout << "连接用户失败 " << user_tty.get_user() << " "
-                    << user_tty.get_tty() << std::endl;
+            std::cout << "连接用户 " << user_tty.get_user() << " "
+                    << user_tty.get_tty() << " 失败" << std::endl;
         } else {
             user_ttys.push_back(user_tty);
-            std::cout << "连接用户成功 " << user_tty.get_user() << " "
-                    << user_tty.get_tty() << std::endl;
+            std::cout << "连接用户 " << user_tty.get_user() << " "
+                    << user_tty.get_tty() << " 成功" << std::endl;
         }
     }
 
+    show_info_me();
     char buf[1024];
     while (std::cin.getline(buf, sizeof(buf))) {
         std::string line = std::string(buf);
@@ -232,9 +244,11 @@ int main(int argc, char *argv[]) {
 
                 UserTty user_tty = UserTty(user, tty);
                 if (user_tty.get_fd() == -1) {
-                    std::cout << "添加用户" << user << " " << tty << "失败" << std::endl;
+                    std::cout << "添加用户 " << user << " " << tty << " 失败" << std::endl;
+                } else {
+                    std::cout << "添加用户 " << user << " " << tty << " 成功" << std::endl;
+                    user_ttys.push_back(user_tty);
                 }
-                user_ttys.push_back(user_tty);
             // 删除用户
             } else if (line.substr(0, 4) == "@del") {
                 char cmd[5];
@@ -242,12 +256,19 @@ int main(int argc, char *argv[]) {
                 char tty[64];
                 sscanf(buf, "%s %s %s", cmd, user, tty);
 
+                bool find_user_tty = false;
                 for (std::vector<UserTty>::iterator it = user_ttys.begin(); 
                     it != user_ttys.end(); ++it) {
                     if (it->get_user() == std::string(user) &&
                         it->get_tty() == std::string(tty)) {
+                        std::cout << "删除用户 " << user << " " << tty << " 成功" << std::endl;
+                        find_user_tty = true;
                         user_ttys.erase(it);
+                        break;
                     }
+                }
+                if (!find_user_tty) {
+                    std::cout << "未找到用户 " << user << " " << tty << std::endl; 
                 }
             } else if (line.substr(0, 6) == "@color") {
                 char cmd[7];
@@ -258,6 +279,7 @@ int main(int argc, char *argv[]) {
                 oss << "\033[" << string_to_color(color) << ";1m";
                 Environment::getInstance().set_font_style_highlight(oss.str());
             } else if (line.substr(0, 5) == "@exit" || line.substr(0, 5) == "@quit") {
+                quit();
                 return 0;
             } else if (line.substr(0, 5) == "@list" || line.substr(0, 3) == "@ls") {
                 for (std::vector<UserTty>::iterator it = user_ttys.begin();
@@ -280,7 +302,7 @@ int main(int argc, char *argv[]) {
             } else if (line.substr(0, 5) == "@help") {
                 show_help();
             } else {
-                // nothing to do
+                std::cout << "指令未找到" << std::endl;
             }
         } else {
             for (std::vector<UserTty>::iterator it = user_ttys.begin();
@@ -288,7 +310,9 @@ int main(int argc, char *argv[]) {
                 it->say(line);
             }
         }
+        show_info_me();
     }
 
+    quit();
     return 0;
 }
