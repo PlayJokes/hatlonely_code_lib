@@ -186,7 +186,7 @@ inline bool operator < (const UserTty &pu1, const UserTty &pu2) {
     return pu1.compare(pu2) < 0;
 }
 
-int main(int argc, char *argv[]) {
+void show_help() {
     std::cout << "usage: owrite [user tty [user tty [...]]]" << std::endl;
     std::cout << "\t@add <user> <tty>  添加用户" << std::endl;
     std::cout << "\t@del <user> <tty>  删除用户" << std::endl;
@@ -194,8 +194,13 @@ int main(int argc, char *argv[]) {
     std::cout << "\t\t black, red, green, yellow, blue, fuchsia, cyan, white" << std::endl;
     std::cout << "\t@list/@ls     列出当前用户" << std::endl;
     std::cout << "\t@name <name>  修改用户名" << std::endl;
-    std::cout << "\t@time         显示时间" << std::endl;
+    std::cout << "\t@help         显示帮助" << std::endl;
+    std::cout << "\t@time         显示和发送时间" << std::endl;
     std::cout << "\t@quit/@exit   退出" << std::endl;
+}
+
+int main(int argc, char *argv[]) {
+    show_help();
     
     std::vector<UserTty> user_ttys;
     int user_num = (argc - 1) / 2;
@@ -272,6 +277,8 @@ int main(int argc, char *argv[]) {
                     it != user_ttys.end(); ++it) {
                     it->say(Environment::getInstance().timenow());
                 }
+            } else if (line.substr(0, 5) == "@help") {
+                show_help();
             } else {
                 // nothing to do
             }
