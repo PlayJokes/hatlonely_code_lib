@@ -17,8 +17,10 @@
 #include <sstream>
 
 
+// 存放一些全局的环境变量
 class Environment {
 public:
+	// 获得当前环境实例
     static Environment &getInstance() {
         static Environment *environment;
         if (environment == NULL) {
@@ -59,6 +61,7 @@ public:
     void set_font_style_default(const std::string &font_style_default) {
         _font_style_default = font_style_default;
     }
+
 private:
     Environment() {
         _user = _user_me();
@@ -66,8 +69,8 @@ private:
         _font_style_highlight = "\033[0m";
         _font_style_default = "\033[0m";
     }
-    // Environment(const Environment &environment) {}
-    // Environment &operator =(const Environment &environment) {}
+    Environment(const Environment &environment);
+    Environment &operator =(const Environment &environment);
     std::string _user_me() {
         return std::string(getpwuid(getuid()) -> pw_name);
     }
@@ -76,10 +79,10 @@ private:
         return tty.substr(5, tty.length() - 5);
     }
 
-    std::string _user;
-    std::string _tty;
-    std::string _font_style_highlight;
-    std::string _font_style_default;
+    std::string _user;		//> 当前用户名
+    std::string _tty;		//> 当前的tty名
+    std::string _font_style_highlight;	// 高亮的字体颜色
+    std::string _font_style_default;	// 默认的字体颜色
 };
 
 enum FrontColor {
@@ -115,6 +118,7 @@ int string_to_color(std::string color) {
     return kBlack;
 }
 
+// 用户和tty
 class UserTty {
 public:
     UserTty(const std::string &user, const std::string &tty):
@@ -126,6 +130,7 @@ public:
             _fd = -1;
         }
     }
+	// 向用户发送消息
     void say(const std::string &line) {
         std::string text = "["
             + Environment::getInstance().get_user() + " "
@@ -139,14 +144,6 @@ public:
         std::ostringstream oss;
         oss << _user << "  " << _tty << "  " << _fd;
         return oss.str();
-    }
-    int compare(const UserTty &pu) const {
-        if (_tty != pu._tty) {
-            return strcmp(_tty.c_str(), pu._tty.c_str());
-        } else if (_user != pu._user) {
-            return strcmp(_user.c_str(), pu._user.c_str());
-        }
-        return 0;
     }
     std::string get_user() {
         return _user;
@@ -182,10 +179,7 @@ private:
     int _fd;
 };
 
-inline bool operator < (const UserTty &pu1, const UserTty &pu2) {
-    return pu1.compare(pu2) < 0;
-}
-
+// 列出帮助信息
 void show_help() {
     std::cout << "usage: owrite [user tty [user tty [...]]]" << std::endl;
     std::cout << "\t@add <user> <tty>  添加用户" << std::endl;
@@ -199,6 +193,7 @@ void show_help() {
     std::cout << "\t@quit/@exit   退出" << std::endl;
 }
 
+// 在当前终端显示自己的信息
 void show_info_me() {
     std::cout << Environment::getInstance().get_font_style_default()
         << "[" << Environment::getInstance().get_user() << " "
@@ -206,7 +201,9 @@ void show_info_me() {
         << Environment::getInstance().get_font_style_highlight();
 }
 
+// 结束时调用
 void quit() {
+	// 恢复终端颜色
     std::cout << Environment::getInstance().get_font_style_default();
 }
 
@@ -270,6 +267,7 @@ int main(int argc, char *argv[]) {
                 if (!find_user_tty) {
                     std::cout << "未找到用户 " << user << " " << tty << std::endl; 
                 }
+			// 修改字体颜色
             } else if (line.substr(0, 6) == "@color") {
                 char cmd[7];
                 char color[20];
@@ -278,20 +276,24 @@ int main(int argc, char *argv[]) {
 
                 oss << "\033[" << string_to_color(color) << ";1m";
                 Environment::getInstance().set_font_style_highlight(oss.str());
+			// 退出
             } else if (line.substr(0, 5) == "@exit" || line.substr(0, 5) == "@quit") {
                 quit();
                 return 0;
+			// 查看当前用户
             } else if (line.substr(0, 5) == "@list" || line.substr(0, 3) == "@ls") {
                 for (std::vector<UserTty>::iterator it = user_ttys.begin();
                     it != user_ttys.end(); ++it) {
                     std::cout << it->to_string() << std::endl;
                 }
+			// 修改用户名
             } else if (line.substr(0, 5) == "@name") {
                 char cmd[6];
                 char name[128];
                 sscanf(buf, "%s %s", cmd, name);
 
                 Environment::getInstance().set_user(name);
+			// 显示并发送当前时间
             } else if (line.substr(0, 5) == "@time") {
                 std::string time = Environment::getInstance().timenow();
                 std::cout << time << std::endl;
@@ -299,12 +301,15 @@ int main(int argc, char *argv[]) {
                     it != user_ttys.end(); ++it) {
                     it->say(Environment::getInstance().timenow());
                 }
+			// 显示帮助
             } else if (line.substr(0, 5) == "@help") {
                 show_help();
+			// 其他
             } else {
                 std::cout << "指令未找到" << std::endl;
             }
         } else {
+			// 向其他用户发送消息
             for (std::vector<UserTty>::iterator it = user_ttys.begin();
                     it != user_ttys.end(); ++it) {
                 it->say(line);
