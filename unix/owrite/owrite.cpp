@@ -132,7 +132,7 @@ public:
     }
 	// 向用户发送消息
     void say(const std::string &line) {
-        std::string text = "["
+        std::string text = Environment::getInstance().get_font_style_default() + "["
             + Environment::getInstance().get_user() + " "
             + Environment::getInstance().get_tty() +  "] "
             + Environment::getInstance().get_font_style_highlight()
@@ -197,8 +197,7 @@ void show_help() {
 void show_info_me() {
     std::cout << Environment::getInstance().get_font_style_default()
         << "[" << Environment::getInstance().get_user() << " "
-        << Environment::getInstance().get_tty() << "] "
-        << Environment::getInstance().get_font_style_highlight();
+        << Environment::getInstance().get_tty() << "] ";
 }
 
 // 结束时调用
@@ -225,7 +224,6 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    show_info_me();
     char buf[1024];
     while (std::cin.getline(buf, sizeof(buf))) {
         std::string line = std::string(buf);
@@ -314,8 +312,10 @@ int main(int argc, char *argv[]) {
                     it != user_ttys.end(); ++it) {
                 it->say(line);
             }
+            show_info_me();
+            std::cout << Environment::getInstance().get_font_style_highlight()
+                << line << Environment::getInstance().get_font_style_default() << std::endl;
         }
-        show_info_me();
     }
 
     quit();
