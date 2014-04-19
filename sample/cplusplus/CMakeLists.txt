@@ -1,0 +1,3 @@
+PROJECT(HELLOWORLD)
+SET(SRC_LIST helloworld.cpp)
+ADD_EXECUTABLE(helloworld ${SRC_LIST})
