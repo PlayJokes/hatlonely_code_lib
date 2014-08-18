@@ -1,72 +1,75 @@
 """""""""""""""""""""""""""""""""""""""""
-"      Linuxç‰ˆæœ¬vim
-"   æœ€åä¸€æ¬¡ä¿®æ”¹ï¼š 2014/3/31
+"      Linux°æ±¾vim
+"   ×îºóÒ»´ÎĞŞ¸Ä£º 2014-08-18
 """""""""""""""""""""""""""""""""""""""""
 
 set nocompatible
-filetype on
 
-
-"""""""""""""""""""""""""""""""""""""""""
-"       åŸºæœ¬è®¾ç½®
-"""""""""""""""""""""""""""""""""""""""""
-set number               " æ˜¾ç¤ºè¡Œå·
-set nobackup             " ä¸å¤‡ä»½
+execute pathogen#infect('bundle/{}')
 syntax on
-colorscheme desert        "é…è‰²æ–¹æ¡ˆ
-set tabstop=4            "TAB è®¾ç½®
+filetype plugin indent on
+
+"""""""""""""""""""""""""""""""""""""""""
+"       »ù±¾ÉèÖÃ
+"""""""""""""""""""""""""""""""""""""""""
+set number               " ÏÔÊ¾ĞĞºÅ
+set nobackup             " ²»±¸·İ
+colorscheme desert       "ÅäÉ«·½°¸
+set tabstop=4            "TAB ÉèÖÃ
 set softtabstop=4
 set shiftwidth=4
-set foldmethod=marker    "æŠ˜å è®¾ç½®
-"set foldmethod=syntax
-"set foldmethod=indent
+set foldmethod=marker    "ÕÛµşÉèÖÃ
+set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=100
-set foldclose=all        "å…³é—­æ‰€æœ‰æŠ˜å 
-set autoindent           "ç¼©è¿›è®¾ç½®
+set foldclose=all        "¹Ø±ÕËùÓĞÕÛµş
+set autoindent           "Ëõ½øÉèÖÃ
 set smartindent
 set cindent
-set fileformats=unix    "è®¾ç½®æ–‡ä»¶æ ¼å¼
+set fileformats=unix    "ÉèÖÃÎÄ¼ş¸ñÊ½
 set backspace=indent,eol,start
+set expandtab
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       ç¼–ç å’Œå­—ä½“è®¾ç½®
+"       ±àÂëºÍ×ÖÌåÉèÖÃ
 """""""""""""""""""""""""""""""""""""""""
-set termencoding=utf-8
-set fileencoding=utf-8
+set encoding=gbk
+set termencoding=gbk
+set fileencoding=gbk
 set fileencodings=utf-8,gbk
 
-set guifont=Monospace\ Bold\ 10
+"set guifont=Monospace\ Bold\ 10
 "set guifont=Consolas\ Regular\ 12
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       å¸¸ç”¨æ˜ å°„
+"       ³£ÓÃÓ³Éä
 """""""""""""""""""""""""""""""""""""""""
 let mapleader=","
 
-"æ ‡ç­¾
+"±êÇ©
 nnoremap L :tabnext<cr>
 nnoremap H :tabprevious<cr>
-nnoremap tn :tabnew
+nnoremap tn :tabnew<space>
 nnoremap ts :tab split<cr>
-"çª—å£åˆ†éš”
+"´°¿Ú·Ö¸ô
 nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
-"æ³¨é‡Š
+"×¢ÊÍ
 nnoremap <leader>/ I/*<space><esc>A<space>*/<esc>j
 nnoremap <leader>; ^xxx$xxxj
 inoremap <leader>/ /*<space><space>*/<left><left><left>
-"æ›¿æ¢
+"Ìæ»»
 nnoremap <leader>r :%s/\<\>//gc<left><left><left><left><left><left>
 nnoremap <c-f> /\<\><left><left>
-"æŠ˜å 
+"ÕÛµş
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<cr>
 nmap <leader>cs O#if 0 /*  comment by hl at <c-r>=strftime("%y/%m/%d %H:%M")<cr>  {{{  */<esc>
 nmap <leader>ce o#endif /*  comment by hl at <c-r>=strftime("%y/%m/%d %H:%M")<cr>  }}}  */<esc>
-"æ’å…¥æ¨¡å¼ä¸‹æ–¹å‘é”®
+"²åÈëÄ£Ê½ÏÂ·½Ïò¼ü
 imap <a-j> <down>
 imap <a-k> <up>
 imap <a-h> <right>
@@ -75,47 +78,50 @@ imap <a-l> <left>
 nnoremap cp :cp<cr>
 nnoremap cn :cn<cr>
 
+nnoremap <leader>ms :mksession ~/etc/session.vim<cr>
+nnoremap <leader>mm :mksession ~/etc/.vim<left><left><left><left>
+nnoremap <leader>sm :source ~/etc/session.vim<cr>
+nnoremap <leader>ss :source ~/etc/.vim<left><left><left><left>
+
 
 """""""""""""""""""""""""""""""""""""""""
-"       ctags æ’ä»¶
+"       ctags ²å¼ş
 """""""""""""""""""""""""""""""""""""""""
 set tags=tags;
-set autochdir
+"set autochdir
 "nmap <c-[> <c-t>
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       taglist æ’ä»¶
+"       taglist ²å¼ş
 """""""""""""""""""""""""""""""""""""""""
 "let Tlist_Ctags_Cmd = 'ctags.exe'
-let Tlist_Show_One_File = 1            " åŒæ—¶æ˜¾ç¤ºå¤šä¸ªæ–‡ä»¶å‡½æ•°åˆ—è¡¨
-let Tlist_Exit_OnlyWindow = 1      "å½“taglist æ˜¯æœ€åä¸€ä¸ªçª—å£æ—¶ï¼Œè‡ªåŠ¨é€€å‡º vim
-let Tlist_Use_Right_Window = 0         "è®©çª—å£æ˜¾ç¤ºåœ¨å·¦è¾¹
-let Tlist_Process_File_Always = 0      "ä¸è¦ä¸€ç›´å¤„ç†tags
-let Tlist_Auto_Close = 0               " éå½“å‰æ–‡ä»¶ï¼Œå‡½æ•°åˆ—è¡¨æŠ˜å éšè—
+let Tlist_Show_One_File = 1            " Í¬Ê±ÏÔÊ¾¶à¸öÎÄ¼şº¯ÊıÁĞ±í
+let Tlist_Exit_OnlyWindow = 1      "µ±taglist ÊÇ×îºóÒ»¸ö´°¿ÚÊ±£¬×Ô¶¯ÍË³ö vim
+let Tlist_Use_Right_Window = 0         "ÈÃ´°¿ÚÏÔÊ¾ÔÚ×ó±ß
+let Tlist_Process_File_Always = 0      "²»ÒªÒ»Ö±´¦Àítags
+let Tlist_Auto_Close = 0               " ·Çµ±Ç°ÎÄ¼ş£¬º¯ÊıÁĞ±íÕÛµşÒş²Ø
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       DoxygenToolkit æ’ä»¶
+"       DoxygenToolkit ²å¼ş
 """""""""""""""""""""""""""""""""""""""""
-let g:DoxygenToolkit_authorName = "hl - ssdlut"
+let g:DoxygenToolkit_authorName = "hele01(hele01@baidu.com)"
 let g:DoxygenToolkit_briefTag_funcName = "no"
-let g:DoxygenToolkit_emailString = "596150637@qq.com"
 let g:DoxygenToolkit_versionString = "1.0"
 
-"let g:DoxygenToolkit_briefTag_pre = "@brief "
+let g:DoxygenToolkit_briefTag_pre = "@desc"
 "let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
 "let g:DoxygenToolkit_paramTag_pre = "@param "
 "let g:DoxygenToolkit_returnTag = "@return "
 "let g:DoxygenToolkit_throwTag_pre = "@throw "
-"let g:DoxygenToolkit_fileTag = "@file "
-"let g:DoxygenToolkit_authorTag = "@author "
-"let g:DoxygenToolkit_emailTag = "@e-mail "
-"let g:DoxygenToolkit_dateTag = "@date "
-"let g:DoxygenToolkit_versionTag = "@version "
+let g:DoxygenToolkit_fileTag = "@file "
+let g:DoxygenToolkit_authorTag = "@auth "
+let g:DoxygenToolkit_dateTag = "@date "
+let g:DoxygenToolkit_versionTag = "@vers "
 "let g:DoxygenToolkit_blockTag = "@name "
 "let g:DoxygenToolkit_classTag = "@class "
-"let g:DoxygenToolkit_commentType = "C"
+let g:DoxygenToolkit_commentType = "C++"
 
 nnoremap <leader>da :DoxAuthor<cr>
 nnoremap <leader>df :Dox<cr>
@@ -123,31 +129,31 @@ nnoremap <leader>db :DoxBlock<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       omnicppcomplete æ’ä»¶
+"       omnicppcomplete ²å¼ş
 "
-"       <c-x> è¿›å…¥è¡¥å…¨æ¨¡å¼
-"       <c-d> å®å®šä¹‰
-"       <c-f> æ–‡ä»¶å
-"       <c-k> å­—å…¸
-"       <c-i> å½“å‰æ–‡ä»¶ä»¥åŠç”±#includeåŒ…å«è¿›æ¥çš„æ–‡ä»¶
-"       <c-l> æ•´ä¸ªè¡Œ
-"       <c-]> æ ‡è®°(tags)
-"       <c-p> å‘å‰æŸ¥æ‰¾, ä¸æ²¡æœ‰<c-x>å‘½ä»¤æ—¶ç›¸åŒ
-"       <c-n> å‘åæŸ¥æ‰¾, ä¸æ²¡æœ‰<c-x>å‘½ä»¤æ—¶ç›¸åŒ
-"       <c-o> ä¸‡èƒ½è¡¥å…¨
-"       <c-f> æ–‡ä»¶åè¡¥å…¨
-"       <c-v> VIMå‘½ä»¤è¡¥å…¨
-"       <c-u> ç”¨æˆ·å®šä¹‰è¡¥å…¨
+"       <c-x> ½øÈë²¹È«Ä£Ê½
+"       <c-d> ºê¶¨Òå
+"       <c-f> ÎÄ¼şÃû
+"       <c-k> ×Öµä
+"       <c-i> µ±Ç°ÎÄ¼şÒÔ¼°ÓÉ#include°üº¬½øÀ´µÄÎÄ¼ş
+"       <c-l> Õû¸öĞĞ
+"       <c-]> ±ê¼Ç(tags)
+"       <c-p> ÏòÇ°²éÕÒ, ÓëÃ»ÓĞ<c-x>ÃüÁîÊ±ÏàÍ¬
+"       <c-n> Ïòºó²éÕÒ, ÓëÃ»ÓĞ<c-x>ÃüÁîÊ±ÏàÍ¬
+"       <c-o> ÍòÄÜ²¹È«
+"       <c-f> ÎÄ¼şÃû²¹È«
+"       <c-v> VIMÃüÁî²¹È«
+"       <c-u> ÓÃ»§¶¨Òå²¹È«
 """""""""""""""""""""""""""""""""""""""""
 imap <leader>s <c-x><c-n>
 imap <leader>d <c-x><c-p>
 imap <leader>f <c-x><c-o>
 
-filetype plugin on
-set completeopt=menu,menuone
-let g:OmniCpp_SelectFirstItem = 0      "æ˜¯å¦è‡ªåŠ¨é€‰æ‹©ç¬¬ä¸€ä¸ªåŒ¹é…é¡¹
-let g:OmniCpp_ShowAccess = 1           " æ˜¾ç¤ºè®¿é—®æ§åˆ¶ä¿¡æ¯
-let g:OmniCpp_GlobalScopeSearch = 1    "å…¨å±€æŸ¥æ‰¾æ§åˆ¶ã€‚0:ç¦æ­¢ï¼› 1:å…è®¸( ç¼ºçœ)
+
+"set completeopt=menu,menuone
+let g:OmniCpp_SelectFirstItem = 0      "ÊÇ·ñ×Ô¶¯Ñ¡ÔñµÚÒ»¸öÆ¥ÅäÏî
+let g:OmniCpp_ShowAccess = 1           " ÏÔÊ¾·ÃÎÊ¿ØÖÆĞÅÏ¢
+let g:OmniCpp_GlobalScopeSearch = 1    "È«¾Ö²éÕÒ¿ØÖÆ¡£0:½ûÖ¹£» 1:ÔÊĞí( È±Ê¡)
 let g:OmniCpp_NamespaceSearch = 1      " 0 ,  1 or 2
 let g:OmniCpp_DisplayMode = 1
 let g:OmniCpp_ShowScopeInAbbr = 0
@@ -158,24 +164,24 @@ let g:OmniCpp_MayCompleteScope = 1
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       åŠŸèƒ½é”®æ˜ å°„
+"       ¹¦ÄÜ¼üÓ³Éä
 """""""""""""""""""""""""""""""""""""""""
 "nmap <F2> :tabnew %:h<cr>
-"åœ¨æ–°æ ‡ç­¾ä¸­æ‰“å¼€å½“å‰ç›®å½•
+"ÔÚĞÂ±êÇ©ÖĞ´ò¿ªµ±Ç°Ä¿Â¼
 nmap <F2> :Texplore<cr>
-"ç”Ÿæˆ tagsæ–‡ä»¶
+"Éú³É tagsÎÄ¼ş
 nmap <F3> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 "nmap <F3> :!ctags -R --fields=+lS .<cr>
-"æ‰“å¼€ taglistï¼Œä¸æ”¯æŒä¸­æ–‡è·¯å¾„
+"´ò¿ª taglist£¬²»Ö§³ÖÖĞÎÄÂ·¾¶
 nmap <F4> :TlistToggle<cr>
-"makeéœ€è¦è‡ªå·±ç¼–å†™ Makefile
+"makeĞèÒª×Ô¼º±àĞ´ Makefile
 nmap <F6> :!make<cr>
 nmap <F7> :!make run<cr>
 nmap <F8> :!make clean<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""
-"       å¯¹é½
+"       ¶ÔÆë
 """""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>ch :call SetColorColumn()<cr>
 function! SetColorColumn()
