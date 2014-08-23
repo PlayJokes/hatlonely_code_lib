@@ -1,7 +1,14 @@
+// Copyright (c) 2014 LoadingHorizion. All Rights Reserved
+//
+// @file json_parser.cpp
+// @desc json配置文件解析类
+// @auth hatlonely(hatlonely@gmail.com)
+// @vers 1.0
+// @date 2014-08-23
+
 #include "json_parser.h"
 
 #include <fstream>
-#include <iostream>
 #include <map>
 #include <iterator>
 

@@ -1,12 +1,16 @@
-#include <iostream>
-
+// Copyright (c) 2014 LoadingHorizion. All Rights Reserved
+//
+// @file configure.cpp
+// @desc 配置文件类
+// @auth hatlonely(hatlonely@gmail.com)
+// @vers 1.0
+// @date 2014-08-23
 
 #include "configure.h"
 #include "config_parser.h"
 #include "json_parser.h"
 
 namespace hl {
-
 
 Configure::Configure()
 {
@@ -35,7 +39,5 @@ int Configure::load(const std::string& path,
 
     return retval;
 }
-
-
 
 }  // hl

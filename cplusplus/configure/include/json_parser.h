@@ -1,7 +1,16 @@
+// Copyright (c) 2014 LoadingHorizion. All Rights Reserved
+//
+// @file json_parser.h
+// @desc json配置文件解析类
+// @auth hatlonely(hatlonely@gmail.com)
+// @vers 1.0
+// @date 2014-08-23
+
 #ifndef _HL_JSON_PARSER_H_
 #define _HL_JSON_PARSER_H_
 
 #include "config_parser.h"
+
 #include <list>
 #include <map>
 #include <vector>
@@ -47,4 +56,4 @@ private:
 
 }  // hl
 
-#endif
+#endif // _HL_JSON_PARSER_H_

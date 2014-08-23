@@ -1,8 +1,14 @@
+// Copyright (c) 2014 LoadingHorizion. All Rights Reserved
+//
+// @file test_configure.cpp
+// @desc 配置文件类单元测试
+// @auth hatlonely(hatlonely@gmail.com)
+// @vers 1.0
+// @date 2014-08-23
 
 #include <configure.h>
 #include <gtest/gtest.h>
-	
-	
+
 int main(int argc, char **argv)
 {
  	testing::InitGoogleTest(&argc, argv);
@@ -33,15 +39,15 @@ TEST_F(test_Configure_suite, get_string_case)
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string description;
-    EXPECT_EQ(0, conf.get<std::string>("description", description));
+    EXPECT_EQ(0, conf.fetch<std::string>("description", description));
     EXPECT_EQ("configure parser for c++, support json formation", description);
 
     std::string version;
-    EXPECT_EQ(0, conf.get<std::string>("version", version));
+    EXPECT_EQ(0, conf.fetch<std::string>("version", version));
     EXPECT_EQ("1.0", version);
 
     std::string date;
-    EXPECT_EQ(0, conf.get<std::string>("date", date));
+    EXPECT_EQ(0, conf.fetch<std::string>("date", date));
     EXPECT_EQ("2014-08-22", date);
 }
  
@@ -51,11 +57,11 @@ TEST_F(test_Configure_suite, map_case)
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string author_name;
-    EXPECT_EQ(0, conf.get<std::string>("author.name", author_name));
+    EXPECT_EQ(0, conf.fetch<std::string>("author.name", author_name));
     EXPECT_EQ("hatlonely",author_name);
 
     std::string author_email;
-    EXPECT_EQ(0, conf.get<std::string>("author.email", author_email));
+    EXPECT_EQ(0, conf.fetch<std::string>("author.email", author_email));
     EXPECT_EQ("hatlonely@gmail.com", author_email);
 }
 
@@ -65,10 +71,10 @@ TEST_F(test_Configure_suite, vector_case)
     EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
 
     std::string maintainers_1_name;
-    EXPECT_EQ(0, conf.get<std::string>("maintainers[1].name", maintainers_1_name));
+    EXPECT_EQ(0, conf.fetch<std::string>("maintainers[1].name", maintainers_1_name));
     EXPECT_EQ("playjokes", maintainers_1_name);
 
     std::string maintainers_1_email;
-    EXPECT_EQ(0, conf.get<std::string>("maintainers[1].email", maintainers_1_email));
+    EXPECT_EQ(0, conf.fetch<std::string>("maintainers[1].email", maintainers_1_email));
     EXPECT_EQ("playjokes@gmail.com", maintainers_1_email);
 }

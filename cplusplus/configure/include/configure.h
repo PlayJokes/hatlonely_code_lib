@@ -1,9 +1,18 @@
+// Copyright (c) 2014 LoadingHorizion. All Rights Reserved
+//
+// @file configure.h
+// @desc 配置文件类
+// @auth hatlonely(hatlonely@gmail.com)
+// @vers 1.0
+// @date 2014-08-23
+
 #ifndef _HL_CONFIGURE_H_
 #define _HL_CONFIGURE_H_
 
 #include <string>
 #include <vector>
 #include <iterator>
+
 #include <boost/any.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
@@ -22,7 +31,7 @@ public:
             const std::string& name, 
             const std::string& type);
 
-    template <typename T> int Configure::get(std::string key_path, T &value)
+    template <typename T> int Configure::fetch(std::string key_path, T &value)
     {
         static boost::regex vec_reg("([a-zA-Z_]+[a-zA-Z0-9_]*)\\[([0-9]+)\\]");
         static boost::regex map_reg("([a-zA-Z_]+[a-zA-Z0-9_]*)");
