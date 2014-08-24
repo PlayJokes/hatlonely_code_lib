@@ -78,3 +78,17 @@ TEST_F(test_Configure_suite, vector_case)
     EXPECT_EQ(0, conf.fetch<std::string>("maintainers[1].email", maintainers_1_email));
     EXPECT_EQ("playjokes@gmail.com", maintainers_1_email);
 }
+
+TEST_F(test_Configure_suite, operator_case)
+{
+    hl::Configure conf;
+    EXPECT_EQ(0, conf.load("./conf", "configure_sample.conf", "json"));
+
+    std::string maintainers_1_name;
+    EXPECT_EQ(0, conf["maintainers[1]"].fetch<std::string>("name", maintainers_1_name));
+    EXPECT_EQ("playjokes", maintainers_1_name);
+
+    std::string maintainers_1_email;
+    EXPECT_EQ(0, conf["maintainers"].fetch<std::string>("[1].email", maintainers_1_email));
+    EXPECT_EQ("playjokes@gmail.com", maintainers_1_email);
+}

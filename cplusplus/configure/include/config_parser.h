@@ -16,8 +16,8 @@ namespace hl {
 class ConfigParser {
 public:
     virtual int parse(
-        const std::string path,
-        const std::string name,
+        const std::string& path,
+        const std::string& name,
         boost::any& container) = 0;
     virtual ~ConfigParser() {}
 };

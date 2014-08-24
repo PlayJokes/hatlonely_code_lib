@@ -26,67 +26,37 @@ typedef std::map<std::string, boost::any> MapStrAny;
 typedef std::vector<boost::any> VectorAny;
 
 public:
-    Configure();
+    explicit Configure();
+    explicit Configure(boost::any &data);
     int load(const std::string& path, 
             const std::string& name, 
             const std::string& type);
+    int fetch_any(const std::string& key_path, boost::any& anything);
+    Configure operator[](const std::string& key_path);
 
-    template <typename T> int Configure::fetch(std::string key_path, T &value)
-    {
-        static boost::regex vec_reg("([a-zA-Z_]+[a-zA-Z0-9_]*)\\[([0-9]+)\\]");
-        static boost::regex map_reg("([a-zA-Z_]+[a-zA-Z0-9_]*)");
-
-        std::vector<std::string> keys;
-        boost::split(keys, key_path, boost::is_any_of("."));
-    
-        boost::any anything = _data;
-
-        for (std::vector<std::string>::iterator it = keys.begin();
-                it != keys.end(); ++it) {
-            boost::smatch m;
-            if (boost::regex_match(*it, m, vec_reg)) {
-                std::string key(m[1].first, m[1].second);
-                std::string idx(m[2].first, m[2].second);
-                uint32_t index = boost::lexical_cast<uint32_t>(idx);
-
-                if (typeid(MapStrAny) != anything.type()) {
-                    return -1;
-                }
-                anything = boost::any_cast<MapStrAny>(anything)[key];
-
-                if (typeid(VectorAny) != anything.type()) {
-                    return -1;
-                }
-                if (boost::any_cast<VectorAny>(anything).size() <= index) {
-                    return -1;
-                }
-                anything = boost::any_cast<VectorAny>(anything)[index];
-            } else if (boost::regex_match(*it, m, map_reg)) {
-                if (typeid(MapStrAny) != anything.type()) {
-                    return -1;
-                }
-                anything = boost::any_cast<MapStrAny>(anything)[*it];
-            } else {
-                return -1;
-            }
-        }
-
-        if (typeid(std::string) != anything.type()) {
-            return -1;
-        }
-
-        std::string str_val = boost::any_cast<std::string>(anything);
-        value = boost::lexical_cast<T>(str_val);
-        
-        return 0;
-    }
+    template <typename T> int fetch(std::string key_path, T &value);
 
 private:
-    std::string _path;
-    std::string _name;
-
     boost::any _data;
 };
+
+template <typename T> int Configure::fetch(std::string key_path, T &value)
+{
+    boost::any anything;
+    int ret = fetch_any(key_path, anything);
+    if (ret != 0) {
+        return ret;
+    }
+
+    if (typeid(std::string) != anything.type()) {
+        return -1;
+    }
+
+    std::string str_val = boost::any_cast<std::string>(anything);
+    value = boost::lexical_cast<T>(str_val);
+
+    return 0;
+}
 
 }
 

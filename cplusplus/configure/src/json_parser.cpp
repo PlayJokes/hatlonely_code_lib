@@ -18,8 +18,8 @@ namespace hl {
 
 
 int JsonParser::parse(
-        const std::string path, 
-        const std::string name, 
+        const std::string& path, 
+        const std::string& name, 
         boost::any& container)
 {
     std::ifstream file;

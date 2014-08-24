@@ -25,8 +25,8 @@ typedef std::vector<boost::any> VectorAny;
 
 public:
     virtual int parse(
-            const std::string path,
-            const std::string name,
+            const std::string& path,
+            const std::string& name,
             boost::any& container);
 
     static const int kMaxLineLength;
