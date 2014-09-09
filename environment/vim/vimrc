@@ -14,7 +14,7 @@ filetype plugin indent on
 """""""""""""""""""""""""""""""""""""""""
 set number               " 显示行号
 set nobackup             " 不备份
-colorscheme desert       "配色方案
+colorscheme delek        "配色方案
 set tabstop=4            "TAB 设置
 set softtabstop=4
 set shiftwidth=4
@@ -78,8 +78,8 @@ imap <a-l> <left>
 nnoremap cp :cp<cr>
 nnoremap cn :cn<cr>
 
-nnoremap <leader>ms :mksession ~/etc/session.vim<cr>
-nnoremap <leader>mm :mksession ~/etc/.vim<left><left><left><left>
+nnoremap <leader>ms :mksession! ~/etc/session.vim<cr>
+nnoremap <leader>mm :mksession! ~/etc/.vim<left><left><left><left>
 nnoremap <leader>sm :source ~/etc/session.vim<cr>
 nnoremap <leader>ss :source ~/etc/.vim<left><left><left><left>
 
@@ -111,14 +111,14 @@ let g:DoxygenToolkit_briefTag_funcName = "no"
 let g:DoxygenToolkit_versionString = "1.0"
 
 let g:DoxygenToolkit_briefTag_pre = "@desc"
-"let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
-"let g:DoxygenToolkit_paramTag_pre = "@param "
-"let g:DoxygenToolkit_returnTag = "@return "
-"let g:DoxygenToolkit_throwTag_pre = "@throw "
 let g:DoxygenToolkit_fileTag = "@file "
 let g:DoxygenToolkit_authorTag = "@auth "
 let g:DoxygenToolkit_dateTag = "@date "
 let g:DoxygenToolkit_versionTag = "@vers "
+"let g:DoxygenToolkit_templateParamTag_pre = "@tparam "
+"let g:DoxygenToolkit_paramTag_pre = "@param "
+"let g:DoxygenToolkit_returnTag = "@return "
+"let g:DoxygenToolkit_throwTag_pre = "@throw "
 "let g:DoxygenToolkit_blockTag = "@name "
 "let g:DoxygenToolkit_classTag = "@class "
 let g:DoxygenToolkit_commentType = "C++"
